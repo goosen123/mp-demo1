@@ -10,27 +10,27 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.goosen.commons.dao.ProductMapper;
-import com.goosen.commons.model.po.Product;
-import com.goosen.commons.service.ProductService;
+import com.goosen.commons.dao.UserMapper;
+import com.goosen.commons.model.po.User;
+import com.goosen.commons.service.UserService;
 import com.goosen.commons.utils.CommonUtil;
 
 /**
- * 商品接口实现
+ * 用户接口实现 
  * @author Goosen
- * 2018年6月27日 -下午4:06:33
+ * 2018年7月3日 -下午3:02:14
  */
 @Transactional
 @Service
-public class ProductServiceImpl extends BaseServiceImpl<Product> implements ProductService{
+public class UserServiceImpl extends BaseServiceImpl<User> implements UserService{
 
     @Autowired
-    private ProductMapper productMapper;
+    private UserMapper userMapper;
 
     @Transactional(readOnly=true)
 	@Override
 	public List<Map<String, Object>> findByParams(Map<String, Object> params) throws Exception {
-		return productMapper.findByParams(params);
+		return userMapper.findByParams(params);
 	}
 
     @Transactional(readOnly=true)
@@ -50,5 +50,5 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
 			resultMap = list.get(0);
 		return resultMap;
 	}
-    
+
 }

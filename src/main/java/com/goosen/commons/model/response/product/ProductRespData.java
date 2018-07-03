@@ -3,10 +3,10 @@ package com.goosen.commons.model.response.product;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-import com.goosen.commons.model.BaseReqAndResp;
+import com.goosen.commons.model.response.BaseResp;
 
 @ApiModel(value="商品")
-public class ProductRespData extends BaseReqAndResp{
+public class ProductRespData extends BaseResp{
 	
 	private static final long serialVersionUID = 3536431311056183802L;
 	
@@ -14,7 +14,7 @@ public class ProductRespData extends BaseReqAndResp{
 	private String id;
 	@ApiModelProperty(value = "商品编号",example="p001")
 	private String code;
-	@ApiModelProperty(value = "商品封面",example="http://psc-img.scspcn.com/portal/2017052617305612880.jpg")
+	@ApiModelProperty(value = "商品封面",example="http://onm6xj8b2.bkt.clouddn.com/08422fb4-7d88-4794-bede-2b0cb789a805.jpg")
     private String coverPic;
 	@ApiModelProperty(value = "商品名称",example="时尚的西裤")
     private String productTitle;
@@ -24,7 +24,7 @@ public class ProductRespData extends BaseReqAndResp{
     private Double originalPrice;
 	@ApiModelProperty(value = "售价，大于0",example="25")
     private Double salePrice;
-    
+	
 	public String getId() {
 		return id;
 	}

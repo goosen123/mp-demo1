@@ -3,15 +3,15 @@ package com.goosen.commons.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.goosen.commons.model.po.Product;
+import com.goosen.commons.model.po.ProductAttr;
 import com.goosen.commons.utils.MyMapper;
 
 /**
- * 商品
+ * 商品属性
  * @author Goosen
- * 2018年6月27日 -下午3:43:29
+ * 2018年7月2日 -上午11:51:11
  */
-public interface ProductMapper extends MyMapper<Product>{
+public interface ProductAttrMapper extends MyMapper<ProductAttr>{
 	
 	public List<Map<String, Object>> findByParams(Map<String, Object> params);
     

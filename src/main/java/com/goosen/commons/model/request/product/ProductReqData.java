@@ -1,24 +1,25 @@
 package com.goosen.commons.model.request.product;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.goosen.commons.annotations.MoneyValue;
-import com.goosen.commons.model.BaseReqAndResp;
+import com.goosen.commons.model.request.BaseReq;
 
-public class ProductUpdateReqData extends BaseReqAndResp{
+@ApiModel(value="商品")
+public class ProductReqData extends BaseReq{
 	
 	private static final long serialVersionUID = 3536431311056183802L;
 	
-	@ApiModelProperty(value = "商品id",required=true,example="618eb09683d946ddb747a5b8ebc300e4")
-	@NotEmpty
+	@ApiModelProperty(value = "商品id",example="618eb09683d946ddb747a5b8ebc300e4")
 	private String id;
 	@ApiModelProperty(value = "商品编号",example="p001")
 	private String code;
-	@ApiModelProperty(value = "商品封面",example="http://psc-img.scspcn.com/portal/2017052617305612880.jpg")
+	@ApiModelProperty(value = "商品封面",example="http://onm6xj8b2.bkt.clouddn.com/08422fb4-7d88-4794-bede-2b0cb789a805.jpg")
     private String coverPic;
-	@ApiModelProperty(value = "商品轮播图集，用英文逗号隔开",example="http://psc-img.scspcn.com/portal/2017052618234471876.jpg,http://psc-img.scspcn.com/portal/2017052618234528492.jpg,http://psc-img.scspcn.com/portal/2017052618234546976.jpg")
+	@ApiModelProperty(value = "商品轮播图集，用英文逗号隔开",example="http://onm6xj8b2.bkt.clouddn.com/08422fb4-7d88-4794-bede-2b0cb789a805.jpg,http://onm6xj8b2.bkt.clouddn.com/08422fb4-7d88-4794-bede-2b0cb789a805.jpg")
     private String cyclePic;
 	@ApiModelProperty(value = "商品名称",required=true,example="时尚的西裤")
     @NotEmpty

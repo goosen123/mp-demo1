@@ -1,4 +1,4 @@
-package com.goosen.commons.model.po.product;
+package com.goosen.commons.model.po;
 
 import javax.persistence.Column;
 

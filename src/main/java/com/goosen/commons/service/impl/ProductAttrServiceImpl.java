@@ -10,27 +10,27 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.goosen.commons.dao.ProductMapper;
-import com.goosen.commons.model.po.Product;
-import com.goosen.commons.service.ProductService;
+import com.goosen.commons.dao.ProductAttrMapper;
+import com.goosen.commons.model.po.ProductAttr;
+import com.goosen.commons.service.ProductAttrService;
 import com.goosen.commons.utils.CommonUtil;
 
 /**
- * 商品接口实现
+ * 商品属性接口实现
  * @author Goosen
- * 2018年6月27日 -下午4:06:33
+ * 2018年7月2日 -下午2:23:32
  */
 @Transactional
 @Service
-public class ProductServiceImpl extends BaseServiceImpl<Product> implements ProductService{
+public class ProductAttrServiceImpl extends BaseServiceImpl<ProductAttr> implements ProductAttrService{
 
     @Autowired
-    private ProductMapper productMapper;
+    private ProductAttrMapper productAttrMapper;
 
     @Transactional(readOnly=true)
 	@Override
 	public List<Map<String, Object>> findByParams(Map<String, Object> params) throws Exception {
-		return productMapper.findByParams(params);
+		return productAttrMapper.findByParams(params);
 	}
 
     @Transactional(readOnly=true)
@@ -50,5 +50,12 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
 			resultMap = list.get(0);
 		return resultMap;
 	}
+
+//	@Override
+//	public void deletProductAttrByProductIds(List<Object> ids) {
+//        if(ids != null && ids.size() > 0){
+//        	deleteByIds(ProductAttr.class, "productId", ids);
+//        }
+//	}
     
 }

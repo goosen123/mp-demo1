@@ -82,6 +82,8 @@ public class BaseController {
 	protected static final String SUCCESS_ENABLE_TRUE = "启用成功!";
 	protected static final String SUCCESS_ENABLE_FALSE = "禁用成功!";
 	
+	protected static final String BASERESPPACKAGE = "com.goosen.commons.model.response.";
+	
 	protected static BaseCudRespData<String> baseCudRespData;
 	
 //	@InitBinder
@@ -151,10 +153,13 @@ public class BaseController {
 		return model;
 	}
 	
-	public static Object buildBaseListRespData(List<Map<String, Object>> list,Object model,List<Object> resultList) {
+	public static Object buildBaseListRespData(List<Map<String, Object>> list,String respPackage) throws Exception {
+		List<Object> resultList = new ArrayList<Object>();
 		if(list == null || list.size() == 0)
 			return resultList;
+		Class c1 = Class.forName(BASERESPPACKAGE+respPackage);
 		for (int i = 0; i < list.size(); i++) {
+			Object model = c1.newInstance();
 			Map<String, Object> map = list.get(i);
 			if(map != null && map.size() > 0)
 				BeanUtil.mapToBean(map, model);
@@ -163,7 +168,8 @@ public class BaseController {
 		return resultList;
 	}
 	
-	public static Object buildBasePageRespData(PageInfo<Map<String, Object>> pageInfo,Object model,PageInfo<Object> resultPage) {
+	public static Object buildBasePageRespData(PageInfo<Map<String, Object>> pageInfo,String respPackage) throws Exception {
+		PageInfo<Object> resultPage = new PageInfo<Object>();
 		List<Object> resultList = new ArrayList<Object>();
 		if(pageInfo == null){
 			resultPage.setList(resultList);
@@ -171,7 +177,9 @@ public class BaseController {
 		}
 		List<Map<String, Object>> list = pageInfo.getList();
 		if(list != null && list.size() > 0){
+			Class c1 = Class.forName(BASERESPPACKAGE+respPackage);
 			for (int i = 0; i < list.size(); i++) {
+				Object model = c1.newInstance();
 				Map<String, Object> map = list.get(i);
 				if(map != null && map.size() > 0)
 					BeanUtil.mapToBean(map, model);

@@ -17,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageInfo;
@@ -24,13 +25,15 @@ import com.goosen.commons.annotations.GetMappingNoLog;
 import com.goosen.commons.annotations.ResponseResult;
 import com.goosen.commons.enums.ResultCode;
 import com.goosen.commons.exception.BusinessException;
-import com.goosen.commons.model.po.product.Product;
-import com.goosen.commons.model.request.product.ProductAddReqData;
-import com.goosen.commons.model.request.product.ProductUpdateReqData;
+import com.goosen.commons.model.po.Product;
+import com.goosen.commons.model.po.ProductAttr;
+import com.goosen.commons.model.request.product.ProductReqData;
 import com.goosen.commons.model.response.BaseCudRespData;
 import com.goosen.commons.model.response.product.ProductRespData;
+import com.goosen.commons.service.ProductAttrService;
 import com.goosen.commons.service.ProductService;
 import com.goosen.commons.utils.BeanUtil;
+import com.goosen.commons.utils.CheckUtil;
 import com.goosen.commons.utils.CommonUtil;
 import com.goosen.commons.utils.IdGenUtil;
 
@@ -43,34 +46,37 @@ public class ProductController extends BaseController{
 	
 	@Resource
 	private ProductService productService;
+	@Resource
+	private ProductAttrService productAttrService;
 	
 	@ApiOperation(value="添加商品")
 	@ResponseResult
-	@RequestMapping(value = {"addProduct"},method=RequestMethod.POST)
-	public BaseCudRespData<String> addProduct(@Validated @RequestBody ProductAddReqData addReqData) {
+	@RequestMapping(value = {"add"},method=RequestMethod.POST)
+	public BaseCudRespData<String> add(@Validated @RequestBody ProductReqData reqData) {
 		
-		if(addReqData == null)
+		if(reqData == null)
 			throw new BusinessException(ResultCode.PARAM_IS_BLANK);
-		Product product = new Product();
-		product.setId(IdGenUtil.uuid());
-		product.setSalesVolume(0);
-		BeanUtil.beanCopyNotNull(product, addReqData);
-		productService.save(product);
+		Product record = new Product();
+		record.setId(IdGenUtil.uuid());
+		record.setSalesVolume(0);
+		BeanUtil.beanCopyNotNull(record, reqData);
+		productService.save(record);
 		
-		return buildBaseCudRespData(product.getId());
+		return buildBaseCudRespData(record.getId());
 	}
 	
 	@ApiOperation(value="修改商品")
 	@ResponseResult
-	@RequestMapping(value = {"updateProduct"},method=RequestMethod.PUT)
-	public BaseCudRespData<String> updateProduct(@RequestBody ProductUpdateReqData updateReqData) {
+	@RequestMapping(value = {"update"},method=RequestMethod.PUT)
+	public BaseCudRespData<String> update(@Validated @RequestBody ProductReqData reqData) {
 		
-		String id = updateReqData.getId();
-		Product product = productService.findById(id);
-		if(product == null)
+		String id = reqData.getId();
+		CheckUtil.notEmpty(id,"id", "商品id不能空");
+		Product record = productService.findById(id);
+		if(record == null)
 			throw new BusinessException(ResultCode.DATA_IS_WRONG);
-		BeanUtil.beanCopyNotNull(product, updateReqData);
-		productService.update(product);
+		BeanUtil.beanCopyNotNull(record, reqData);
+		productService.update(record);
 		
 		return buildBaseCudRespData("");
 	}
@@ -78,8 +84,8 @@ public class ProductController extends BaseController{
 	@ApiOperation(value="获取商品详情")
 	@GetMappingNoLog
 	@ResponseResult
-	@RequestMapping(value = {"getProductDetail"},method=RequestMethod.GET)
-    public ProductRespData getProductDetail(@ApiParam(name="id",value="商品id",required=true)String id) throws Exception {
+	@RequestMapping(value = {"getDetail"},method=RequestMethod.GET)
+    public ProductRespData getDetail(@ApiParam(name="id",value="商品id",required=true)String id) throws Exception {
 		
 		Map<String, Object> params = new HashMap<String, Object>();
 		if(!CommonUtil.isTrimNull(id))
@@ -98,22 +104,22 @@ public class ProductController extends BaseController{
 	@ApiOperation(value="获取商品列表")
 	@GetMappingNoLog
 	@ResponseResult
-	@RequestMapping(value = {"getProductList"},method=RequestMethod.GET)
-    public List<ProductRespData> getProductList(String productTitle) throws Exception {
+	@RequestMapping(value = {"getList"},method=RequestMethod.GET)
+    public List<ProductRespData> getList(@ApiParam(name="productTitle",value="商品标题")String productTitle) throws Exception {
 		
 		Map<String, Object> params = new HashMap<String, Object>();
 		if(!CommonUtil.isTrimNull(productTitle))
 			params.put("productTitle", productTitle);
 		List<Map<String, Object>> list = productService.findByParams(params);
 		
-        return (List<ProductRespData>) buildBaseListRespData(list, new ProductRespData(), new ArrayList<Object>());
+        return (List<ProductRespData>) buildBaseListRespData(list, "product.ProductRespData");
     }
 	
 	@ApiOperation(value="分页获取商品列表")
 	@GetMappingNoLog
 	@ResponseResult
-	@RequestMapping(value = {"getProductListByPage"},method=RequestMethod.GET)
-    public PageInfo<ProductRespData> getProductListByPage(Integer pageNum,Integer pageSize,String productTitle) throws Exception {
+	@RequestMapping(value = {"getListByPage"},method=RequestMethod.GET)
+    public PageInfo<ProductRespData> getListByPage(@ApiParam(name="pageNum",value="当前页数")Integer pageNum,@ApiParam(name="pageSize",value="页大小")Integer pageSize,@ApiParam(name="productTitle",value="商品标题")String productTitle) throws Exception {
 		
 		Map<String, Object> params = new HashMap<String, Object>();
 		if(!CommonUtil.isTrimNull(productTitle))
@@ -121,7 +127,21 @@ public class ProductController extends BaseController{
 		addPageParams(pageNum, pageSize, params);
 		PageInfo<Map<String, Object>> pageInfo = productService.findByParamsByPage(params);
 		
-        return (PageInfo<ProductRespData>) buildBasePageRespData(pageInfo, new ProductRespData(), new PageInfo<Object>());
+        return (PageInfo<ProductRespData>) buildBasePageRespData(pageInfo, "product.ProductRespData");
     }
+	
+	@ApiOperation(value="删除商品")
+	@ResponseResult
+	@RequestMapping(value = {"delete"},method=RequestMethod.POST)
+	public BaseCudRespData<String> delete(@ApiParam(name="ids",value="商品id集",required=true) @RequestParam("ids")List<Object> ids) {
+		
+		if(ids != null && ids.size() > 0){
+			productService.deleteByIds(Product.class, "id", ids);
+			//关联删除商品属性
+			productAttrService.deleteByIds(ProductAttr.class, "productId", ids);
+		}
+		
+		return buildBaseCudRespData("");
+	}
 	
 }

@@ -43,6 +43,12 @@ public class CheckUtil {
 			fail(fieldName,message);
 		}
 	}
+	
+	public static void isVaileNum(Integer num, String fieldName,String message) {
+		if (!CommonUtil.isVaileNum(num)) {
+			fail(fieldName,message);
+		}
+	}
 
 	private static void fail(String fieldName, String message) {
 		throw new BusinessException(ResultCode.PARAM_IS_INVALID,new ParameterInvalidItem(fieldName,message));
