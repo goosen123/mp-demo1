@@ -180,28 +180,28 @@ public class ClassUtil {
 	 * @param methodStr 要执行方法的字符串，不区分大小写
 	 * @return 成功true 失败false
 	 */
-	public static boolean executeClassMethod(String classname,String methodStr){
-		Object o = null;
-		try {
-			o = Class.forName(classname.trim()).newInstance();
-		} catch (Exception e) {
-			return false;
-		}
-		if(null == o){
-			return false;
-		}
-		Map methods = getObjNameMethodMap(o);
-		Object methodObjec = methods.get(methodStr.toLowerCase().trim());
-		if(null != methodObjec){
-			Method method = (Method) methodObjec;
-			try {
-				method.invoke(o);
-			} catch (Exception e) {
-				return false;
-			}
-		}
-		return true;
-	}
+//	public static boolean executeClassMethod(String classname,String methodStr){
+//		Object o = null;
+//		try {
+//			o = Class.forName(classname.trim()).newInstance();
+//		} catch (Exception e) {
+//			return false;
+//		}
+//		if(null == o){
+//			return false;
+//		}
+//		Map methods = getObjNameMethodMap(o);
+//		Object methodObjec = methods.get(methodStr.toLowerCase().trim());
+//		if(null != methodObjec){
+//			Method method = (Method) methodObjec;
+//			try {
+//				method.invoke(o);
+//			} catch (Exception e) {
+//				return false;
+//			}
+//		}
+//		return true;
+//	}
 	
 	/******************************************************************************************************/
 	
@@ -214,44 +214,44 @@ public class ClassUtil {
 	 * @param classname 查找的文件名
 	 * @return
 	 */
-	public String scanPath(String className,String startPath){
-		if(className.length() == 0){
-			return null;
-		}
-		
-		if(startPath == null){
-			startPath = ".";
-		}
-		try {
-			File file = new File(startPath);
-			return this.findFile(file, className);
-		} catch (Exception e) {
-			return null;
-		}
-	}
+//	public String scanPath(String className,String startPath){
+//		if(className.length() == 0){
+//			return null;
+//		}
+//		
+//		if(startPath == null){
+//			startPath = ".";
+//		}
+//		try {
+//			File file = new File(startPath);
+//			return this.findFile(file, className);
+//		} catch (Exception e) {
+//			return null;
+//		}
+//	}
 	
-	public String scanPath(String className){
-		return this.scanPath(className,null);
-	}
+//	public String scanPath(String className){
+//		return this.scanPath(className,null);
+//	}
 	
-	public String findFile(File file,String findName){
-		File fields[] = file.listFiles();
-		for(File files : fields){ 
-			if(files.isFile()){
-				String name = files.getName();
-				String nameArray[] = name.split("\\.");
-				if(nameArray.length > 0){
-					String tempName = nameArray[0];
-					if(tempName.equals(findName)){
-						String path = files.getAbsolutePath();
-						return path;
-					}
-				}
-			}else{
-				findFile(files,findName);
-			}
-		}
-		return null;
-	}
+//	public String findFile(File file,String findName){
+//		File fields[] = file.listFiles();
+//		for(File files : fields){ 
+//			if(files.isFile()){
+//				String name = files.getName();
+//				String nameArray[] = name.split("\\.");
+//				if(nameArray.length > 0){
+//					String tempName = nameArray[0];
+//					if(tempName.equals(findName)){
+//						String path = files.getAbsolutePath();
+//						return path;
+//					}
+//				}
+//			}else{
+//				findFile(files,findName);
+//			}
+//		}
+//		return null;
+//	}
 	
 }

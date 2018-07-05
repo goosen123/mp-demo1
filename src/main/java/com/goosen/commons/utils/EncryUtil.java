@@ -1,5 +1,6 @@
 package com.goosen.commons.utils;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -19,14 +20,15 @@ public class EncryUtil {
 	 * 字符串Base64加密 
 	 * @param str
 	 * @return
+	 * @throws UnsupportedEncodingException 
 	 */
-    public static String encodeByBase64(String str) { 
+    public static String encodeByBase64(String str){ 
         byte[] b = null; 
         String s = null; 
         try { 
-            b = str.getBytes("utf-8"); 
+        	b = str.getBytes("utf-8"); 
         } catch (UnsupportedEncodingException e) { 
-            e.printStackTrace(); 
+            throw new RuntimeException(e);
         } 
         if (b != null) { 
             s = new BASE64Encoder().encode(b); 
@@ -44,12 +46,16 @@ public class EncryUtil {
         String result = null; 
         if (str != null) { 
             BASE64Decoder decoder = new BASE64Decoder(); 
-            try { 
-                b = decoder.decodeBuffer(str); 
-                result = new String(b, "utf-8"); 
-            } catch (Exception e) { 
-                e.printStackTrace(); 
-            } 
+                try {
+					b = decoder.decodeBuffer(str);
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				} 
+                try {
+					result = new String(b, "utf-8");
+				} catch (UnsupportedEncodingException e) {
+					throw new RuntimeException(e);
+				} 
         } 
         return result; 
     } 
@@ -69,7 +75,7 @@ public class EncryUtil {
 		try {
 			md = MessageDigest.getInstance("MD5");
 		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 
 		if (null == md)

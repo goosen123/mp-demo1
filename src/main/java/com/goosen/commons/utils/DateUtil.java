@@ -1,5 +1,6 @@
 package com.goosen.commons.utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,14 +31,16 @@ public class DateUtil {
      * @param dateStr
      * @param format
      * @return
+     * @throws ParseException 
      */
-    public static Date convert2Date(String dateStr, String format) {  
+    public static Date convert2Date(String dateStr, String format){  
         SimpleDateFormat simple = new SimpleDateFormat(format); 
         try {  
             simple.setLenient(false);  
             return simple.parse(dateStr);  
-        } catch (Exception e) {  
-            return  null;  
+        } catch (Exception e) {
+        	throw new RuntimeException(e);
+//            return  null;  
         }  
      }  
     
@@ -50,11 +53,11 @@ public class DateUtil {
      */
     public static String convert2String(Date date, String format) {
         SimpleDateFormat formater = new SimpleDateFormat(format);
-        try {
+//        try {
             return formater.format(date);
-        } catch (Exception e) {
-            return null;
-        }
+//        } catch (Exception e) {
+//            return null;
+//        }
     }
     
     /**

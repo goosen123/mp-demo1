@@ -49,7 +49,14 @@ public enum ResultCode {
 	/* 权限错误：70001-79999 */
 	PERMISSION_NO_ACCESS(70001, "无访问权限"),
 	RESOURCE_EXISTED(70002, "资源已存在"),
-	RESOURCE_NOT_EXISTED(70003, "资源不存在");
+	RESOURCE_NOT_EXISTED(70003, "资源不存在"),
+	SUPER_ADMIN_UPDATE(70004, "不能修改超级管理员角色"),
+	SUPER_ADMIN_DELETE(70005, "不能删除超级管理员角色"),
+	
+	/* 菜单错误：80001-89999 */
+	MENU_PCODE_COINCIDENCE(80001,"菜单编号和父编号不能一致"),
+	EXISTED_THE_MENU(80002,"菜单编号重复，不能添加"),
+	PMENU_NOT_EXISTED(80003,"父菜单不存在");
 
 	private Integer code;
 

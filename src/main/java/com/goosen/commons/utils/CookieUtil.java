@@ -1,29 +1,30 @@
 package com.goosen.commons.utils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
- * @desc cookie操作工具类
- * 
- * @author zhumaer
- * @since 6/20/2017 16:37 PM
+ * cookie操作工具类
+ * @author Goosen
+ * 2018年7月5日 -上午11:46:44
  */
 public class CookieUtil {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(CookieUtil.class);
+//	private static final Logger LOGGER = LoggerFactory.getLogger(CookieUtil.class);
 
 	/**
 	 * 添加cookie信息，不设置生效时间，默认浏览器关闭即失效 备注：默认开启HttpOnly
+	 * @throws UnsupportedEncodingException 
 	 */
-	public static void addCookie(HttpServletResponse response, String name, String value) {
+	public static void addCookie(HttpServletResponse response, String name, String value) throws UnsupportedEncodingException {
 		addCookie(response, name, value, -1, false, true, false);
 	}
 
@@ -34,21 +35,22 @@ public class CookieUtil {
 	 * 当设置为true时，表示创建的 Cookie 会被以安全的形式向服务器传输，也就是只能在 HTTPS 连接中被浏览器传递到服务器端进行会话验证，如果是 HTTP 连接则不会传递该信息，所以不会被窃取到Cookie 的具体内容。
 	 * HttpOnly属性
 	 * 如果在Cookie中设置了"HttpOnly"属性，那么通过程序(JS脚本、Applet等)将无法读取到Cookie信息，这样能有效的防止XSS攻击。
+	 * @throws UnsupportedEncodingException 
 	 */
-	public static void addCookie(HttpServletResponse response, String name, String value, int maxAge, boolean isURLEncode, boolean isHttpOnly, boolean isSecure) {
+	public static void addCookie(HttpServletResponse response, String name, String value, int maxAge, boolean isURLEncode, boolean isHttpOnly, boolean isSecure){
 		try {
 			Cookie cookie = new Cookie(name, isURLEncode ? URLEncoder.encode(value, "UTF-8") : value);
 			if (maxAge > 0) {
 				cookie.setMaxAge(maxAge);
 			}
-
 			cookie.setPath("/");
 			//报错，先去掉  goosen
 			//cookie.setHttpOnly(isHttpOnly);
 			cookie.setSecure(isSecure);
 			response.addCookie(cookie);
 		} catch (UnsupportedEncodingException e) {
-			LOGGER.error("addCookie occurs exception, caused by: ", e);
+			throw new RuntimeException(e);
+//			LOGGER.error("addCookie occurs exception, caused by: ", e);
 		}
 	}
 
@@ -102,8 +104,9 @@ public class CookieUtil {
 
 	/**
 	 * 添加cookie信息，指定生效时间，是否URL编码 备注：默认开启HttpOnly
+	 * @throws UnsupportedEncodingException 
 	 */
-	public static void addCookie(HttpServletResponse response, String name, String value, int maxAge, boolean isURLEncode) {
+	public static void addCookie(HttpServletResponse response, String name, String value, int maxAge, boolean isURLEncode) throws UnsupportedEncodingException {
 		if (StringUtil.isEmpty(value)) {
 			return;
 		}
@@ -113,19 +116,20 @@ public class CookieUtil {
 
 	/**
 	 * 获取登录的cookie值，是否进行解码
+	 * @throws UnsupportedEncodingException 
 	 */
-	public static String getCookieValue(HttpServletRequest request, String name, boolean isDecode) {
+	public static String getCookieValue(HttpServletRequest request, String name, boolean isDecode){
 		if (StringUtil.isEmpty(name)) {
 			return null;
 		}
-
 		try {
 			Cookie cookie = getCookie(request, name);
 			if (cookie != null) {
 				return isDecode ? URLDecoder.decode(cookie.getValue(), "UTF-8") : cookie.getValue();
 			}
 		} catch (UnsupportedEncodingException e) {
-			LOGGER.error("getCookieValue occurs exception, caused by: ", e);
+			//LOGGER.error("getCookieValue occurs exception, caused by: ", e);
+			throw new RuntimeException(e);
 		}
 		return null;
 	}

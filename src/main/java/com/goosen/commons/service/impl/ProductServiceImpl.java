@@ -29,13 +29,13 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
 
     @Transactional(readOnly=true)
 	@Override
-	public List<Map<String, Object>> findByParams(Map<String, Object> params) throws Exception {
+	public List<Map<String, Object>> findByParams(Map<String, Object> params){
 		return productMapper.findByParams(params);
 	}
 
     @Transactional(readOnly=true)
 	@Override
-	public PageInfo<Map<String, Object>> findByParamsByPage(Map<String, Object> params) throws Exception {
+	public PageInfo<Map<String, Object>> findByParamsByPage(Map<String, Object> params){
 		PageHelper.startPage(CommonUtil.getIntValue(params, "pageNum"),CommonUtil.getIntValue(params, "pageSize"));
 		List<Map<String, Object>> list = findByParams(params);
 		return new PageInfo<Map<String, Object>>(list);
@@ -43,7 +43,7 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
 
     @Transactional(readOnly=true)
 	@Override
-	public Map<String, Object> findOneByParams(Map<String, Object> params) throws Exception {
+	public Map<String, Object> findOneByParams(Map<String, Object> params){
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		List<Map<String, Object>> list = findByParams(params);
 		if(list != null && list.size() > 0)

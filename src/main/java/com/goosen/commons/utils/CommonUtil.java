@@ -2,6 +2,7 @@ package com.goosen.commons.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -284,8 +285,9 @@ public class CommonUtil {
 	 * 返回容器的时间值 
 	 *@param map 容器
 	 *@param key key
+	 * @throws ParseException 
 	 */
-	public static Date getDateValue(Map map, String key) {
+	public static Date getDateValue(Map map, String key){
 		return getDateValue(map, key,"yyyy-MM-dd HH:mm:ss");
 	}
 	public static Date getDateValue(String dateStr){
@@ -302,8 +304,9 @@ public class CommonUtil {
 	 *@param map 容器
 	 *@param key key
 	 *@param format 格式
+	 * @throws ParseException 
 	 */
-	public static Date getDateValue(Map map, String key,String format) {
+	public static Date getDateValue(Map map, String key,String format){
 		if(null == map || map.size() == 0 || !map.containsKey(key) 
 				|| key == null || isTrimNull(key)){
 			return null;
@@ -331,40 +334,40 @@ public class CommonUtil {
 	 * @param newCode 新编码，ISO-8859-1、GBK、UTF-8
 	 * @return
 	 */
-	public static String changeCode(String source,String oldCode,String newCode){
-		if(null == source)
-			return null;
-		try {
-			String codeValue = "ISO-8859-1";
-			if("gbk".equalsIgnoreCase(oldCode)){
-				codeValue = "GBK";
-			}else if("utf8".equalsIgnoreCase(oldCode) || "utf-8".equalsIgnoreCase(oldCode)){
-				codeValue = "UTF-8";
-			}else if("ISO-8859-1".equalsIgnoreCase(oldCode)){
-				codeValue = "ISO-8859-1";
-			}
-			return new String(source.getBytes(codeValue),newCode);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+//	public static String changeCode(String source,String oldCode,String newCode){
+//		if(null == source)
+//			return null;
+//		try {
+//			String codeValue = "ISO-8859-1";
+//			if("gbk".equalsIgnoreCase(oldCode)){
+//				codeValue = "GBK";
+//			}else if("utf8".equalsIgnoreCase(oldCode) || "utf-8".equalsIgnoreCase(oldCode)){
+//				codeValue = "UTF-8";
+//			}else if("ISO-8859-1".equalsIgnoreCase(oldCode)){
+//				codeValue = "ISO-8859-1";
+//			}
+//			return new String(source.getBytes(codeValue),newCode);
+//		} catch (UnsupportedEncodingException e) {
+//			e.printStackTrace();
+//		}
+//		return null;
+//	}
 	
 	/**
 	 * 将ISO-8859-1的字符串返回UTF-8的字符串
 	 * @param source
 	 * @return
 	 */
-	public static String iSO88591ToUTF8Code(String source){
-		if(null == source)
-			return null;
-		try {
-			return new String(source.getBytes("ISO-8859-1"),"UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+//	public static String iSO88591ToUTF8Code(String source){
+//		if(null == source)
+//			return null;
+//		try {
+//			return new String(source.getBytes("ISO-8859-1"),"UTF-8");
+//		} catch (UnsupportedEncodingException e) {
+//			e.printStackTrace();
+//		}
+//		return null;
+//	}
 	
 	/** 
      * 将emoji表情替换成空串

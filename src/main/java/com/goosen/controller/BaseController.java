@@ -153,7 +153,7 @@ public class BaseController {
 		return model;
 	}
 	
-	public static Object buildBaseListRespData(List<Map<String, Object>> list,String respPackage) throws Exception {
+	public static Object buildBaseListRespData(List<Map<String, Object>> list,String respPackage) throws ClassNotFoundException, InstantiationException, IllegalAccessException{
 		List<Object> resultList = new ArrayList<Object>();
 		if(list == null || list.size() == 0)
 			return resultList;
@@ -168,7 +168,7 @@ public class BaseController {
 		return resultList;
 	}
 	
-	public static Object buildBasePageRespData(PageInfo<Map<String, Object>> pageInfo,String respPackage) throws Exception {
+	public static Object buildBasePageRespData(PageInfo<Map<String, Object>> pageInfo,String respPackage) throws ClassNotFoundException, InstantiationException, IllegalAccessException{
 		PageInfo<Object> resultPage = new PageInfo<Object>();
 		List<Object> resultList = new ArrayList<Object>();
 		if(pageInfo == null){

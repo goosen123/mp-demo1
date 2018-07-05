@@ -24,7 +24,23 @@ public class ProductAttrRespData extends BaseResp{
     private Integer stockVolume;
     @ApiModelProperty(value = "商品id",example="94f9d13c546d40ed9e6ba2e4674162e2")
     private String productId;
-    
+    @ApiModelProperty(value = "创建时间",example="2018-06-29 18:11:08")
+	private String createTime;
+	@ApiModelProperty(value = "修改时间",example="2018-06-29 18:11:08")
+	private String updateTime;
+
+	public String getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
+	}
+	public String getUpdateTime() {
+		return updateTime;
+	}
+	public void setUpdateTime(String updateTime) {
+		this.updateTime = updateTime;
+	}
 	public String getId() {
 		return id;
 	}

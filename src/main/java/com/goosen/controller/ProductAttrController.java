@@ -83,6 +83,7 @@ public class ProductAttrController extends BaseController{
 	@RequestMapping(value = {"getDetail"},method=RequestMethod.GET)
     public ProductAttrRespData getDetail(@ApiParam(name="id",value="商品属性id",required=true)String id) throws Exception {
 		
+		CheckUtil.notEmpty("id", "id", "商品属性id不能空");
 		Map<String, Object> params = new HashMap<String, Object>();
 		if(!CommonUtil.isTrimNull(id))
 			params.put("id", id);

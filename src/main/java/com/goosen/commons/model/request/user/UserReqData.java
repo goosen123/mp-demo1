@@ -11,7 +11,7 @@ import com.goosen.commons.annotations.EnumValue;
 import com.goosen.commons.model.request.BaseReq;
 
 @ApiModel(value="用户")
-public class UserAttrReqData extends BaseReq{
+public class UserReqData extends BaseReq{
 
 	private static final long serialVersionUID = 3536431311056183802L;
 	

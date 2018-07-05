@@ -24,121 +24,123 @@ import com.goosen.commons.annotations.GetMappingNoLog;
 import com.goosen.commons.annotations.ResponseResult;
 import com.goosen.commons.enums.ResultCode;
 import com.goosen.commons.exception.BusinessException;
+import com.goosen.commons.model.po.Role;
 import com.goosen.commons.model.po.User;
+import com.goosen.commons.model.request.role.RoleReqData;
 import com.goosen.commons.model.request.user.UserReqData;
 import com.goosen.commons.model.response.BaseCudRespData;
+import com.goosen.commons.model.response.role.RoleRespData;
 import com.goosen.commons.model.response.user.UserRespData;
+import com.goosen.commons.service.RoleService;
 import com.goosen.commons.service.UserService;
 import com.goosen.commons.utils.BeanUtil;
 import com.goosen.commons.utils.CheckUtil;
 import com.goosen.commons.utils.CommonUtil;
 import com.goosen.commons.utils.IdGenUtil;
 
-@Api(value="用户管理",description="用户管理")
+@Api(value="角色管理",description="角色管理")
 @RestController
-@RequestMapping(value="user")
-public class UserController extends BaseController{
+@RequestMapping(value="role")
+public class RoleController extends BaseController{
 	
 	protected Logger log = LoggerFactory.getLogger(getClass());
 	
 	@Resource
-	private UserService userService;
+	private RoleService roleService;
 	
-	@ApiOperation(value="添加用户")
+	@ApiOperation(value="添加角色")
 	@ResponseResult
 	@RequestMapping(value = {"add"},method=RequestMethod.POST)
-	public BaseCudRespData<String> add(@Validated @RequestBody UserReqData reqData){
+	public BaseCudRespData<String> add(@Validated @RequestBody RoleReqData reqData){
 		
 		if(reqData == null)
 			throw new BusinessException(ResultCode.PARAM_IS_BLANK);
 		
-		//判断账号是否已存在
-		String account = reqData.getAccount();
-		Integer status = reqData.getStatus();
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("account", account);
-		params.put("status", status);
-		Map<String,Object> userMap = userService.findOneByParams(params);
-		if(userMap != null && userMap.size() > 0)
-			throw new BusinessException(ResultCode.USER_HAS_EXISTED);
-		
-		User record = new User();
+		Role record = new Role();
 		record.setId(IdGenUtil.uuid());
-		record.setUserMoney(0.0);
 		BeanUtil.beanCopyNotNull(record, reqData);
-		userService.save(record);
+		roleService.save(record);
 		
 		return buildBaseCudRespData(record.getId());
 	}
 	
-	@ApiOperation(value="修改用户")
+	@ApiOperation(value="修改角色")
 	@ResponseResult
 	@RequestMapping(value = {"update"},method=RequestMethod.POST)
-	public BaseCudRespData<String> update(@Validated @RequestBody UserReqData reqData) {
+	public BaseCudRespData<String> update(@Validated @RequestBody RoleReqData reqData) {
 		
 		String id = reqData.getId();
-		CheckUtil.notEmpty("id", "id", "用户id不能空");
-		User record = userService.findById(id);
+		CheckUtil.notEmpty("id", "id", "id不能空");
+		if(id.equals("20a00e3f72a54f91a24cb903ac84083f"))
+			throw new BusinessException(ResultCode.SUPER_ADMIN_UPDATE);
+		Role record = roleService.findById(id);
 		if(record == null)
 			throw new BusinessException(ResultCode.DATA_IS_WRONG);
-		//账号不给修改
-		reqData.setAccount(null);
+		
 		BeanUtil.beanCopyNotNull(record, reqData);
-		userService.update(record);
+		roleService.update(record);
 		
 		return buildBaseCudRespData("");
 	}
 	
-	@ApiOperation(value="获取用户详情")
+	@ApiOperation(value="获取角色详情")
 	@GetMappingNoLog
 	@ResponseResult
 	@RequestMapping(value = {"getDetail"},method=RequestMethod.GET)
-    public UserRespData getDetail(@ApiParam(name="id",value="用户id",required=true)String id){
+    public RoleRespData getDetail(@ApiParam(name="id",value="角色id",required=true)String id){
 		
-		CheckUtil.notEmpty("id", "id", "用户id不能空");
+		CheckUtil.notEmpty("id", "id", "id不能空");
 		Map<String, Object> params = new HashMap<String, Object>();
 		if(!CommonUtil.isTrimNull(id))
 			params.put("id", id);
-		Map<String, Object> map = userService.findOneByParams(params);
+		Map<String, Object> map = roleService.findOneByParams(params);
 		
-        return (UserRespData) buildBaseModelRespData(map, new UserRespData());
+        return (RoleRespData) buildBaseModelRespData(map, new RoleRespData());
     }
 	
-	@ApiOperation(value="获取用户列表")
+	@ApiOperation(value="获取角色列表")
 	@GetMappingNoLog
 	@ResponseResult
 	@RequestMapping(value = {"getList"},method=RequestMethod.GET)
-    public List<UserRespData> getList(@ApiParam(name="userName",value="用户名称")String userName) throws Exception{
+    public List<RoleRespData> getList(@ApiParam(name="name",value="角色名称")String name) throws Exception{
 		
 		Map<String, Object> params = new HashMap<String, Object>();
-		if(!CommonUtil.isTrimNull(userName))
-			params.put("userName", userName);
-		List<Map<String, Object>> list = userService.findByParams(params);
+		if(!CommonUtil.isTrimNull(name))
+			params.put("name", name);
+		List<Map<String, Object>> list = roleService.findByParams(params);
 		
-		return (List<UserRespData>) buildBaseListRespData(list, "user.UserRespData");
+		return (List<RoleRespData>) buildBaseListRespData(list, "role.RoleRespData");
     }
 	
-	@ApiOperation(value="分页获取用户列表")
+	@ApiOperation(value="分页获取角色列表")
 	@GetMappingNoLog
 	@ResponseResult
 	@RequestMapping(value = {"getListByPage"},method=RequestMethod.GET)
-    public PageInfo<UserRespData> getListByPage(@ApiParam(name="pageNum",value="当前页数")Integer pageNum,@ApiParam(name="pageSize",value="页大小")Integer pageSize,@ApiParam(name="userName",value="用户名称")String userName) throws Exception {
+    public PageInfo<RoleRespData> getListByPage(@ApiParam(name="pageNum",value="当前页数")Integer pageNum,@ApiParam(name="pageSize",value="页大小")Integer pageSize,@ApiParam(name="name",value="角色名称")String name) throws Exception {
 		
 		Map<String, Object> params = new HashMap<String, Object>();
-		if(!CommonUtil.isTrimNull(userName))
-			params.put("userName", userName);
+		if(!CommonUtil.isTrimNull(name))
+			params.put("name", name);
 		addPageParams(pageNum, pageSize, params);
-		PageInfo<Map<String, Object>> pageInfo = userService.findByParamsByPage(params);
+		PageInfo<Map<String, Object>> pageInfo = roleService.findByParamsByPage(params);
 		
-        return (PageInfo<UserRespData>) buildBasePageRespData(pageInfo, "user.UserRespData");
+        return (PageInfo<RoleRespData>) buildBasePageRespData(pageInfo, "role.RoleRespData");
     }
 	
-	@ApiOperation(value="删除用户")
+	@ApiOperation(value="删除角色")
 	@ResponseResult
 	@RequestMapping(value = {"delete"},method=RequestMethod.POST)
 	public BaseCudRespData<String> delete(@ApiParam(name="ids",value="角色id集",required=true) @RequestParam("ids")List<Object> ids) {
 		
-		userService.deleteByIds(User.class, "id", ids);
+		if(ids != null && ids.size() > 0){
+			for (int i = 0; i < ids.size(); i++) {
+				String id = (String) ids.get(i);
+				if(!CommonUtil.isTrimNull(id) && id.equals("20a00e3f72a54f91a24cb903ac84083f"))
+					throw new BusinessException(ResultCode.SUPER_ADMIN_DELETE);
+			}
+		}
+		
+		roleService.deleteByIds(Role.class, "id", ids);
 		
 		return buildBaseCudRespData("");
 	}

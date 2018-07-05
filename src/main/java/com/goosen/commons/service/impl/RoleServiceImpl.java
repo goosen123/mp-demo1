@@ -11,18 +11,18 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.goosen.commons.dao.UserMapper;
-import com.goosen.commons.model.po.User;
-import com.goosen.commons.service.UserService;
+import com.goosen.commons.model.po.Role;
+import com.goosen.commons.service.RoleService;
 import com.goosen.commons.utils.CommonUtil;
 
 /**
- * 用户接口实现 
+ * 角色接口实现
  * @author Goosen
- * 2018年7月3日 -下午3:02:14
+ * 2018年7月5日 -下午6:07:35
  */
 @Transactional
 @Service
-public class UserServiceImpl extends BaseServiceImpl<User> implements UserService{
+public class RoleServiceImpl extends BaseServiceImpl<Role> implements RoleService{
 
     @Autowired
     private UserMapper userMapper;

@@ -7,9 +7,9 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.goosen.commons.annotations.EnumValue;
-import com.goosen.commons.model.request.user.UserAttrReqData.StatusEnum;
-import com.goosen.commons.model.request.user.UserAttrReqData.UserSex;
-import com.goosen.commons.model.request.user.UserAttrReqData.UserTypeEnum;
+import com.goosen.commons.model.request.user.UserReqData.StatusEnum;
+import com.goosen.commons.model.request.user.UserReqData.UserSex;
+import com.goosen.commons.model.request.user.UserReqData.UserTypeEnum;
 import com.goosen.commons.model.response.BaseResp;
 
 public class UserRespData extends BaseResp{
@@ -43,7 +43,23 @@ public class UserRespData extends BaseResp{
     @ApiModelProperty(value = "状态(1：启用  2：冻结  3：删除）",example="1")
     @EnumValue(enumClass = StatusEnum.class, enumMethod = "isValidCode")
     private Integer status;
-    
+    @ApiModelProperty(value = "创建时间",example="2018-06-29 18:11:08")
+	private String createTime;
+	@ApiModelProperty(value = "修改时间",example="2018-06-29 18:11:08")
+	private String updateTime;
+
+	public String getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
+	}
+	public String getUpdateTime() {
+		return updateTime;
+	}
+	public void setUpdateTime(String updateTime) {
+		this.updateTime = updateTime;
+	}
 	public String getId() {
 		return id;
 	}

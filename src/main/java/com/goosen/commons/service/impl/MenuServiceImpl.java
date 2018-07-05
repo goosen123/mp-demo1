@@ -10,27 +10,27 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.goosen.commons.dao.UserMapper;
-import com.goosen.commons.model.po.User;
-import com.goosen.commons.service.UserService;
+import com.goosen.commons.dao.MenuMapper;
+import com.goosen.commons.model.po.Menu;
+import com.goosen.commons.service.MenuService;
 import com.goosen.commons.utils.CommonUtil;
 
 /**
- * 用户接口实现 
+ * 接口接口实现
  * @author Goosen
- * 2018年7月3日 -下午3:02:14
+ * 2018年7月4日 -下午1:52:06
  */
 @Transactional
 @Service
-public class UserServiceImpl extends BaseServiceImpl<User> implements UserService{
+public class MenuServiceImpl extends BaseServiceImpl<Menu> implements MenuService{
 
     @Autowired
-    private UserMapper userMapper;
+    private MenuMapper menuMapper;
 
     @Transactional(readOnly=true)
 	@Override
 	public List<Map<String, Object>> findByParams(Map<String, Object> params){
-		return userMapper.findByParams(params);
+		return menuMapper.findByParams(params);
 	}
 
     @Transactional(readOnly=true)

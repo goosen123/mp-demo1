@@ -13,10 +13,10 @@ import com.goosen.commons.model.po.Product;
  */
 public interface ProductService extends BaseService<Product>{
     
-	List<Map<String,Object>> findByParams(Map<String,Object> params) throws Exception;
+	List<Map<String,Object>> findByParams(Map<String,Object> params);
     
-	PageInfo<Map<String,Object>> findByParamsByPage(Map<String,Object> params) throws Exception;
+	PageInfo<Map<String,Object>> findByParamsByPage(Map<String,Object> params);
     
-	Map<String,Object> findOneByParams(Map<String,Object> params) throws Exception;
+	Map<String,Object> findOneByParams(Map<String,Object> params);
     
 }

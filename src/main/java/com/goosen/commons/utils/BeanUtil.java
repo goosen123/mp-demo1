@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -166,8 +167,11 @@ public class BeanUtil {
 	 * 2018年06月28日  上午11:02:25
 	 * @param map 源数据map
 	 * @param model  目标对象
+	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException 
+	 * @throws ParseException 
 	 */
-	public static String mapToBean(Map map,Object model){
+	public static String mapToBean(Map map,Object model) {
 		 if(model == null || map == null || map.size() == 0)
 			 return null;
 		 String adt = "";
@@ -229,8 +233,8 @@ public class BeanUtil {
 						String fieldName = field.getName().toLowerCase();
 						params.put(fieldName, fieldValue);
 					}
-				} catch (IllegalArgumentException e) {
-				} catch (IllegalAccessException e) {
+				} catch (Exception e) {
+					throw new RuntimeException(e);
 				}
 			}
 		}
@@ -244,12 +248,15 @@ public class BeanUtil {
 	 * @param model  对象
 	 * @param field 对象属性
 	 * @param o     属性值
+	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException 
+	 * @throws ParseException 
 	 */
 	private static void setFieldValue(Object model,Field field,Object o){
 		if(null == model || null == field || null == o){
 			return;
 		}
-		 try {
+		try{
 			Type type = field.getGenericType();
 			 //是一个引用类型
 			 if(type instanceof Class<?>){
@@ -310,14 +317,14 @@ public class BeanUtil {
 						field.set(model, value);
 						
 					}//TODO 添加支持其他数据类型的自动赋值
-					
 					else{//属于其他引用类型	
 						field.set(model, o);
 					}
 					
 			}
-		} catch (Exception e) {
-		}		
+		}catch(Exception e){
+			throw new RuntimeException(e);
+		}
 	}
 	
 }

@@ -24,7 +24,23 @@ public class ProductRespData extends BaseResp{
     private Double originalPrice;
 	@ApiModelProperty(value = "售价，大于0",example="25")
     private Double salePrice;
-	
+	@ApiModelProperty(value = "创建时间",example="2018-06-29 18:11:08")
+	private String createTime;
+	@ApiModelProperty(value = "修改时间",example="2018-06-29 18:11:08")
+	private String updateTime;
+
+	public String getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
+	}
+	public String getUpdateTime() {
+		return updateTime;
+	}
+	public void setUpdateTime(String updateTime) {
+		this.updateTime = updateTime;
+	}
 	public String getId() {
 		return id;
 	}

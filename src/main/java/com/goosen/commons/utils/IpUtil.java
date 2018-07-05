@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
+
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.UnknownHostException;
@@ -19,7 +20,7 @@ import java.util.regex.Pattern;
  */
 public class IpUtil {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(IpUtil.class);//AESUtil
+//	private static final Logger LOGGER = LoggerFactory.getLogger(IpUtil.class);//AESUtil
 
 	private static final String IP_PATTERN = "^(?:(?:[01]?\\d{1,2}|2[0-4]\\d|25[0-5])\\.){3}(?:[01]?\\d{1,2}|2[0-4]\\d|25[0-5])\\b";
 
@@ -89,7 +90,8 @@ public class IpUtil {
 					InetAddress inet = InetAddress.getLocalHost();
 					ip = inet.getHostAddress();
 				} catch (UnknownHostException e) {
-					LOGGER.error("getRealIp occurs error, caused by: ", e);
+//					LOGGER.error("getRealIp occurs error, caused by: ", e);
+					throw new RuntimeException(e);
 				}
 			}
 		}
@@ -124,7 +126,8 @@ public class IpUtil {
 				}
 			}
 		} catch (Exception e) {
-			LOGGER.error("getServiceIp occurs error, caused by: ", e);
+//			LOGGER.error("getServiceIp occurs error, caused by: ", e);
+			throw new RuntimeException(e);
 		}
 
 		return ipsStr;
