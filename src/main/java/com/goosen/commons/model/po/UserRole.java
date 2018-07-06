@@ -6,19 +6,19 @@ import javax.persistence.Table;
 import com.goosen.commons.model.BasePO;
 
 /**
- * 角色菜单实体
+ * 用户角色实体
  * @author Goosen
- * 2018年7月5日 -下午11:02:41
+ * 2018年7月6日 -下午3:14:16
  */
-@Table(name = "sys_role_menu")
-public class RoleMenu extends BasePO{
+@Table(name = "sys_user_role")
+public class UserRole extends BasePO{
 	
 	private static final long serialVersionUID = -7491215402569546437L;
 	
 	@Column(name = "roleId")
     private String roleId;
-	@Column(name = "menuId")
-    private String menuId;
+	@Column(name = "userId")
+    private String userId;
     
 	public String getRoleId() {
 		return roleId;
@@ -26,11 +26,11 @@ public class RoleMenu extends BasePO{
 	public void setRoleId(String roleId) {
 		this.roleId = roleId;
 	}
-	public String getMenuId() {
-		return menuId;
+	public String getUserId() {
+		return userId;
 	}
-	public void setMenuId(String menuId) {
-		this.menuId = menuId;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	
 }

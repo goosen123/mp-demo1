@@ -1,6 +1,6 @@
 package com.goosen.commons.dao;
 
-import com.goosen.commons.model.po.Menu;
+import com.goosen.commons.model.po.RoleMenu;
 import com.goosen.commons.utils.MyMapper;
 
 /**
@@ -8,6 +8,6 @@ import com.goosen.commons.utils.MyMapper;
  * @author Goosen
  * 2018年7月5日 -下午11:37:20
  */
-public interface RoleMenuMapper extends MyMapper<Menu>{
+public interface RoleMenuMapper extends MyMapper<RoleMenu>{
 	
 }

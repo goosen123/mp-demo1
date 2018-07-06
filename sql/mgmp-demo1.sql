@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50625
 File Encoding         : 65001
 
-Date: 2018-07-05 18:45:57
+Date: 2018-07-06 18:42:27
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -197,6 +197,9 @@ CREATE TABLE `sys_role_menu` (
 -- ----------------------------
 -- Records of sys_role_menu
 -- ----------------------------
+INSERT INTO `sys_role_menu` VALUES ('6114f72799824398bc4a1cf96cf0bfbf', '20a00e3f72a54f91a24cb903ac84083f', 'ca32f561a7494e42a29dc9d2756ca85c', '2018-07-06 14:54:35', '2018-07-06 14:54:35');
+INSERT INTO `sys_role_menu` VALUES ('8f50bf8091574f49823d982a32f56e1d', '20a00e3f72a54f91a24cb903ac84083f', 'c8ae71bf395b40d6bae1076374072c35', '2018-07-06 14:54:35', '2018-07-06 14:54:35');
+INSERT INTO `sys_role_menu` VALUES ('eb56e11aa16f4f5f86d8e8a913cc0a89', '20a00e3f72a54f91a24cb903ac84083f', '30d1c5639e294d338d43277bbacfc9cf', '2018-07-06 14:54:35', '2018-07-06 14:54:35');
 
 -- ----------------------------
 -- Table structure for `sys_user`
@@ -242,3 +245,4 @@ CREATE TABLE `sys_user_role` (
 -- ----------------------------
 -- Records of sys_user_role
 -- ----------------------------
+INSERT INTO `sys_user_role` VALUES ('da859f2f9466416292ac12a2b3a241fe', '618eb09683d946ddb747a5b8ebc300e4', '20a00e3f72a54f91a24cb903ac84083f', '2018-07-06 15:28:24', '2018-07-06 15:28:24');

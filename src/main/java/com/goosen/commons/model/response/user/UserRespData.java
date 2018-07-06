@@ -1,5 +1,6 @@
 package com.goosen.commons.model.response.user;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.Pattern;
@@ -12,6 +13,7 @@ import com.goosen.commons.model.request.user.UserReqData.UserSex;
 import com.goosen.commons.model.request.user.UserReqData.UserTypeEnum;
 import com.goosen.commons.model.response.BaseResp;
 
+@ApiModel(value="用户")
 public class UserRespData extends BaseResp{
 
 	private static final long serialVersionUID = 3536431311056183802L;

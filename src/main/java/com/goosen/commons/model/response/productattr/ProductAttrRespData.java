@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import com.goosen.commons.model.response.BaseResp;
 
-@ApiModel(value="商品")
+@ApiModel(value="商品属性")
 public class ProductAttrRespData extends BaseResp{
 	
 	private static final long serialVersionUID = 3536431311056183802L;
