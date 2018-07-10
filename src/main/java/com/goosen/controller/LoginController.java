@@ -53,11 +53,11 @@ public class LoginController extends BaseController{
 		//判断账号是否已存在
 		String account = reqData.getAccount();
 		//管理员
-		Integer status = 1;
+		Integer userType = 1;
 		String password = reqData.getPassword();
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("account", account);
-		params.put("status", status);
+		params.put("userType", userType);
 		Map<String,Object> userMap = userService.findOneByParams(params);
 		if(userMap == null || userMap.size() == 0)
 			throw new BusinessException(ResultCode.USER_NOT_EXIST);

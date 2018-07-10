@@ -54,10 +54,10 @@ public class UserController extends BaseController{
 		
 		//判断账号是否已存在
 		String account = reqData.getAccount();
-		Integer status = reqData.getStatus();
+		Integer userType = reqData.getUserType();
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("account", account);
-		params.put("status", status);
+		params.put("userType", userType);
 		Map<String,Object> userMap = userService.findOneByParams(params);
 		if(userMap != null && userMap.size() > 0)
 			throw new BusinessException(ResultCode.USER_HAS_EXISTED);
